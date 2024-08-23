@@ -1,20 +1,23 @@
-provider "docker" {
-  # Configure the Docker provider with your Docker endpoint
-}
-
-# Build the Docker image
-resource "docker_image" "httpd_image" {
-  name         = "my-httpd-image"
-  build {
-    context    = "Dockerfile"
-    dockerfile = "Dockerfile/Dockerfile"
+terraform {
+  required_providers {
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "~> 2.15.0"  # You can use a more recent version if available
+    }
   }
 }
 
-# Create and run the Docker container
-resource "docker_container" "httpd_container" {
+provider "docker" {
+  # Docker provider configuration
+}
+
+resource "docker_image" "httpd" {
+  name = "httpd:latest"
+}
+
+resource "docker_container" "httpd" {
+  image = docker_image.httpd.latest
   name  = "my-httpd-container"
-  image = docker_image.httpd_image.latest
   ports {
     internal = 80
     external = 8080
