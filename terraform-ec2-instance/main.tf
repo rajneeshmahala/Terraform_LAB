@@ -6,7 +6,7 @@ provider "aws" {
 # key pair
 resource "aws_key_pair" "key" {
   key_name   = "my-key"  # Change the key name as needed
-  public_key = file("~/.ssh/id_rsa.pub")  # Path to your public key
+  public_key = file("id_rsa.pub")  # Path to your public key
 }
 
 # Security Group
@@ -31,7 +31,7 @@ resource "aws_security_group" "instance" {
 
 # EC2 instance
 resource "aws_instance" "my_instance" {
-  ami           = "ami-0c55b159cbfafe1f0"  # Amazon Linux 2 AMI in us-east-1; 
+  ami           = "ami-0e86e20dae9224db8"  # Amazon Linux 2 AMI in us-east-1; 
   instance_type = "t2.micro"  # instance type
 
   key_name      = aws_key_pair.key.key_name  # Use the key pair created above
